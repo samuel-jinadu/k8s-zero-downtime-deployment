@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api
+  namespace: prod
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: api
+  template:
+    metadata:
+      labels:
+        app: api
+    spec:
+      containers:
+        - name: api
+          image: hashicorp/http-echo:latest
+          imagePullPolicy: IfNotPresent
+          args:
+            - "-text=$(RESPONSE_TEXT)"
+          ports:
+            - containerPort: 5678
+          env:
+            - name: RESPONSE_TEXT
+              valueFrom:
+                configMapKeyRef:
+                  name: api-config
+                  key: RESPONSE_TEXT

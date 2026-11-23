@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: api-config
+  namespace: prod
+data:
+  RESPONSE_TEXT: "Hello from Production."
