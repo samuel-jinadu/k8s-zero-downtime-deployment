@@ -19,4 +19,4 @@ if k3d cluster list 2>/dev/null | grep -q "^${CLUSTER_NAME}"; then
 fi
 
 echo "▶ Creating new cluster '${CLUSTER_NAME}'..."
-k3d cluster create "${CLUSTER_NAME}" --port "8080:8080@loadbalancer" --wait
+k3d cluster create "${CLUSTER_NAME}" --port "8080:80@loadbalancer" --wait
