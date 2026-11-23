@@ -1,4 +1,5 @@
 #!/bin/bash
+# This script is destructive - BE WARNED
 
 CLUSTER_NAME=default
 
@@ -13,16 +14,9 @@ fi
 
 
 if k3d cluster list 2>/dev/null | grep -q "^${CLUSTER_NAME}"; then
-  SERVERS_RUNNING=$(k3d cluster list | grep "^${CLUSTER_NAME}" | awk '{print $2}')
-  echo "▶ Cluster '${CLUSTER_NAME}' exists (servers: ${SERVERS_RUNNING})"
-
-  if echo "${SERVERS_RUNNING}" | grep -q "^0/"; then
-    echo "  Restarting stopped cluster..."
-    k3d cluster start ${CLUSTER_NAME}
-  else
-    echo "  Cluster is already running ✅"
-  fi
-else
-  echo "▶ Creating new cluster '${CLUSTER_NAME}'..."
-    k3d cluster create "${CLUSTER_NAME}" --wait
+  echo "▶ Deleting existing cluster '${CLUSTER_NAME}' to recreate with port 8080 binding..."
+  k3d cluster delete "${CLUSTER_NAME}"
 fi
+
+echo "▶ Creating new cluster '${CLUSTER_NAME}'..."
+k3d cluster create "${CLUSTER_NAME}" --port "8080:8080@loadbalancer" --wait
