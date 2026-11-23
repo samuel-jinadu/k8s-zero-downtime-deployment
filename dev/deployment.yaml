@@ -18,6 +18,12 @@ spec:
           image: hashicorp/http-echo:latest
           imagePullPolicy: IfNotPresent
           args:
-            - "-text=Hello from the API - v1"
+            - "-text=$(RESPONSE_TEXT)"
           ports:
             - containerPort: 5678
+          env:
+            - name: RESPONSE_TEXT
+              valueFrom:
+                configMapKeyRef:
+                  name: api-config
+                  key: RESPONSE_TEXT
