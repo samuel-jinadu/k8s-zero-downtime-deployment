@@ -6,6 +6,8 @@ kubectl apply -f dev/namespace.yaml
 kubectl apply -f prod/namespace.yaml
 kubectl apply -f staging/namespace.yaml
 
+kubectl apply -f rbac/
+
 kubectl apply -f dev/
 kubectl apply -f staging/
 kubectl apply -f prod/
