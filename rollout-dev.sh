@@ -1,7 +1,8 @@
 #!/bin/bash
 
-kubectl apply -f dev/deployment.yaml
+kubectl apply -f dev/configmap.yaml
 kubectl apply -f dev/service.yaml
+kubectl apply -f dev/deployment.yaml
 
 kubectl rollout status deployment/api --timeout 100s
 
